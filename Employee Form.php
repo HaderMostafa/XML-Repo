@@ -3,13 +3,14 @@ session_start();
 setcookie("count", 0, time() + 2 * 24 * 60 * 60, '/');
 
 // link to xml file
-$xmlObj = new DOMDocument("1.0", "UTF-8") or die("Error: Cannot create object"); ///**** */
+$xmlObj = new DOMDocument("1.0", "UTF-8");
+// or die("Error: Cannot create object"); ///**** */
 $xmlObj->load("Employee.xml");
 
 // root element
 $root = $xmlObj->documentElement;
+
 //$root = $xmlObj->getElementsByTagName("Employees")->item(0);
-// $emp_name_val = $xmlObj->getElementsByTagName("id")->item(0)->nodeValue;
 
 //************************************************NEXT***************************************************************** */
 if (isset($_POST["next"])) {
@@ -99,7 +100,7 @@ if (isset($_POST["prev"])) {
 
 if (isset($_POST["insert"])) {
 
-    // check that all fields are okay   /*********************** */
+    // check that all fields are okay
 
     // get data from input fields
     $emp_name = $_POST['name'];
@@ -117,7 +118,7 @@ if (isset($_POST["insert"])) {
         $emp_id = $existed_Emp_No + 1;
     }
 
-    //create Employee {
+    //create Employee
     $Emp = $xmlObj->createElement("Employee");
     $id = $xmlObj->createElement("id", $emp_id);
     $Name = $xmlObj->createElement("Name", $emp_name);
@@ -125,7 +126,7 @@ if (isset($_POST["insert"])) {
     $Address = $xmlObj->createElement("Address", $emp_address);
     $Email = $xmlObj->createElement("Email", $emp_mail);
 
-//append
+    //append
     $root->appendChild($Emp);
     $Emp->appendChild($id);
     $Emp->appendChild($Name);
@@ -133,7 +134,7 @@ if (isset($_POST["insert"])) {
     $Emp->appendChild($Address);
     $Emp->appendChild($Email);
 
-//save
+    //save
     $xmlObj->save("Employee.xml");
 }
 
@@ -141,12 +142,13 @@ if (isset($_POST["insert"])) {
 
 if (isset($_POST["update"])) {
 
-    $Emp_No = $xmlObj->getElementsByTagName("id")->length; //6
-    $id;
+    $Emp_No = $xmlObj->getElementsByTagName("id")->length;
+
+    //$id;
 
     if ($_COOKIE["count"] > 0 && $_COOKIE["count"] <= $Emp_No) {
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
         // for ($j = 0; $j < $Emp_No; $j++) {
 
         //     $matched_name = $xmlObj->getElementsByTagName("Name")->item($j)->nodeValue;
@@ -170,7 +172,7 @@ if (isset($_POST["update"])) {
         //     $xmlObj->getElementsByTagName("Email")[$id]->nodeValue = $_POST['mail'];
         // }
 
-//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&7&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&*/
         $empID = $_COOKIE["count"] - 1;
 
         $emp_name = $_POST['name'];
@@ -215,13 +217,17 @@ if (isset($_POST["delete"])) {
                 }
             }
         }
-
     }
 }
 
 //**************************************************SEARCH************************************************************* */
 
+//SEARCH ONLY BY NAME AS REQUIRED
+
 if (isset($_POST["search"])) {
+
+    $id;
+    $founded = false;
 
     $Emp_No = $xmlObj->getElementsByTagName("id")->length;
 
@@ -229,13 +235,28 @@ if (isset($_POST["search"])) {
 
         $matched_name = $xmlObj->getElementsByTagName("Name")->item($j)->nodeValue;
 
+        // check that all name field is okay okay
+
         if ($matched_name == $_POST['name']) {
 
-            $emp_name_val = $xmlObj->getElementsByTagName("Name")->item($j)->nodeValue;
-            $emp_phone_val = $xmlObj->getElementsByTagName("Phone")->item($j)->nodeValue;
-            $emp_address_val = $xmlObj->getElementsByTagName("Address")->item($j)->nodeValue;
-            $emp_mail_val = $xmlObj->getElementsByTagName("Email")->item($j)->nodeValue;
+            $id = $j;
+            $founded = true;
         }
+    }
+
+    if ($founded == true) {
+
+        $emp_name_val = $xmlObj->getElementsByTagName("Name")->item($id)->nodeValue;
+        $emp_phone_val = $xmlObj->getElementsByTagName("Phone")->item($id)->nodeValue;
+        $emp_address_val = $xmlObj->getElementsByTagName("Address")->item($id)->nodeValue;
+        $emp_mail_val = $xmlObj->getElementsByTagName("Email")->item($id)->nodeValue;
+
+    } else {
+
+        $emp_name_val = " ";
+        $emp_phone_val = " ";
+        $emp_address_val = " ";
+        $emp_mail_val = " ";
     }
 }
 
@@ -310,7 +331,6 @@ if (isset($_POST["search"])) {
 
         <div class=" formcontainer">
             <div class="container">
-                <!-- Employee Form.php -->
 
                 <label for="name"><strong>Name:</strong></label>
                 <input type="text" placeholder="Enter Name" name="name" id="name"

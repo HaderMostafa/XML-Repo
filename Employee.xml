@@ -1,3 +1,24 @@
-﻿<?xml version="1.0"?>
-<Employees>
-<Employee><id>1</id><Name>Hadeer </Name><Phone>01019861532</Phone><Address>kafr dawar</Address><Email>hadeermostafa@gmail.com</Email></Employee><Employee><id>2</id><Name>Ali</Name><Phone>01012345678</Phone><Address>alex</Address><Email>ali@gmail.com</Email></Employee><Employee><id>3</id><Name>ahmed</Name><Phone>01025983214</Phone><Address>cairo</Address><Email>ahmed@gmail.com</Email></Employee></Employees>
+<?xml version="1.0"?>
+<Employees xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance" xsd:noNamespaceSchemaLocation="employee.xsd">
+<Employee>
+<id>1</id>
+<Name>Hadeer</Name>
+<Phone>01019861532</Phone>
+<Address>kafr dawar</Address>
+<Email>hadeermostafa@gmail.com</Email>
+</Employee>
+<Employee>
+<id>2</id>
+<Name>Ahmed</Name>
+<Phone>01012345678</Phone>
+<Address>cairo</Address>
+<Email>ahmed@gmail.com</Email>
+</Employee>
+<Employee>
+<id>3</id>
+<Name>ali</Name>
+<Phone>01012345678</Phone>
+<Address>alex</Address>
+<Email>ali@gmail.com</Email>
+</Employee>
+</Employees>
